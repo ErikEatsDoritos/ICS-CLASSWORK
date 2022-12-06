@@ -704,7 +704,7 @@ def win():
     running = True
     global move_x
     global move_y
-   
+    global collected
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -791,5 +791,4 @@ def exit_location(exit):
         move_y = 420
         #level 4 ending
     
-
 main_menu()
