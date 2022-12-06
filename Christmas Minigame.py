@@ -32,14 +32,21 @@ def main_menu():
         mx, my = pygame.mouse.get_pos()
 
         draw_text('Christmas Mania', pygame.font.SysFont(None, 80), (BLACK), screen, 45, 100)
+
         draw_text('Made by Erik', font, (BLACK), screen, 50, 200)
         button_1 = pygame.draw.rect(screen, BLACK, (100,300,150,60))  
         button_2 = pygame.draw.rect(screen, BLACK, (350,300,150,60))
+        draw_text('Play', pygame.font.SysFont(None, 80), (WHITE), screen, 100, 300)
+        draw_text('Help', pygame.font.SysFont(None, 80), (WHITE), screen, 350, 300)
         if button_1.collidepoint((mx,my)):
             pygame.draw.rect(screen,(RED),(100,300,150,60),2)
             if Click:
-                exit_location(8)
-                level_5()
+                exit_location(0)
+                level_1()
+        if button_2.collidepoint((mx,my)):
+            pygame.draw.rect(screen,(RED),(350,300,150,60),2)
+            if Click:
+               help()
                 
         if button_2.collidepoint((mx,my)):
             pass
@@ -58,6 +65,33 @@ def main_menu():
                     Click = True
         pygame.display.update()
         clock.tick(165)
+def help():
+    Click = False
+    running = True
+    while running:
+        screen.fill((BLUE))
+        
+        draw_text('Santa had his christmas tree robbed', pygame.font.SysFont(None, 20), (BLACK), screen, 45, 100)
+
+        draw_text('he needs your help to bring back the presents and ornaments ', pygame.font.SysFont(None, 20), (BLACK), screen, 50, 200)
+        draw_text('As Santas little helper you accept his offer and set out into the world to find them', pygame.font.SysFont(None, 20), (BLACK), screen, 50, 300)
+        
+        Click = False
+        for event in pygame.event.get():
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+            elif event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    Click = True
+        pygame.display.update()
+        clock.tick(165)
+
+
+
 
 def level_1():
     Click = False
@@ -618,34 +652,14 @@ def level_6():
     running = True
     global move_x
     global move_y
-    up = False
-    down = False
-    left = False
-    right = False
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
                 if event.key == K_ESCAPE:
                     running = False
-                if event.key == pygame.K_w:
-                    up = True
-                if event.key == pygame.K_a:
-                    left = True
-                if event.key == pygame.K_s:
-                    down = True
-                if event.key == pygame.K_d:
-                    right = True
             if event.type == pygame.KEYUP:
                 if event.key == K_ESCAPE:
                     running = False
-                if event.key == pygame.K_w:
-                    up = False  
-                if event.key == pygame.K_a:
-                    left = False
-                if event.key == pygame.K_s:
-                    down = False
-                if event.key == pygame.K_d:
-                    right = False
             elif event.type == QUIT:
                     pygame.quit()
                     sys.exit()
@@ -660,11 +674,11 @@ def level_6():
         if button.collidepoint((mx,my)):
             pygame.draw.rect(screen,(RED),(150,150,50,30),1)
             if Click:      
-                if sum(collected) == 0:
+                if sum(collected) == 8:
                         win()
                     
 
-                elif sum(collected) == 8:
+                elif sum(collected) <= 7:
 
                     draw_text('Santa says theres still some left.. click again to go back',pygame.font.SysFont(None, 40), (WHITE), screen, 45, 300)
                     
@@ -694,28 +708,7 @@ def win():
     while running:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
-                if event.key == K_ESCAPE:
-                    running = False
-                if event.key == pygame.K_w:
-                    up = True
-                if event.key == pygame.K_a:
-                    left = True
-                if event.key == pygame.K_s:
-                    down = True
-                if event.key == pygame.K_d:
-                    right = True
-            if event.type == pygame.KEYUP:
-                if event.key == K_ESCAPE:
-                    running = False
-                if event.key == pygame.K_w:
-                    up = False  
-                if event.key == pygame.K_a:
-                    left = False
-                if event.key == pygame.K_s:
-                    down = False
-                if event.key == pygame.K_d:
-                    right = False
-            elif event.type == QUIT:
+                if event.type == QUIT:
                     pygame.quit()
                     sys.exit()
             if event.type == MOUSEBUTTONDOWN:
@@ -724,18 +717,23 @@ def win():
                    
         mx,my = pygame.mouse.get_pos()  
         screen.fill((BLACK))  
+        
         draw_text('you win would you like to start again?', pygame.font.SysFont(None, 20), (WHITE), screen, 45, 100)
         button = pygame.draw.rect(screen,(WHITE),(150,150,100,50))
         button2 = pygame.draw.rect(screen,(WHITE),(300,150,100,50))
+        draw_text('Yes', pygame.font.SysFont(None, 40), (BLACK), screen, 150, 150)
+        draw_text('No', pygame.font.SysFont(None, 40), (BLACK), screen, 300, 150)   
         if button.collidepoint((mx,my)):
             pygame.draw.rect(screen,(RED),(150,150,100,50),1)
             if Click:      
+               
                exit_location(0)
                collected = [0,0,0,0,0,0,0,0]
-               level_1()
+               main_menu()
         if button2.collidepoint((mx,my)):
             pygame.draw.rect(screen,(RED),(300,150,100,50),1)
-            if Click:      
+            if Click:  
+                 
                 pygame.quit()
                 sys.exit()
         pygame.display.update()
