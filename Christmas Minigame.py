@@ -1,4 +1,4 @@
-import pygame, sys
+import pygame, sys, time
 from pygame.locals import K_ESCAPE, KEYDOWN, QUIT, MOUSEBUTTONDOWN
 
 pygame.init()
@@ -38,8 +38,8 @@ def main_menu():
         if button_1.collidepoint((mx,my)):
             pygame.draw.rect(screen,(RED),(100,300,150,60),2)
             if Click:
-                exit_location(0)
-                level_1()
+                exit_location(8)
+                level_5()
                 
         if button_2.collidepoint((mx,my)):
             pass
@@ -603,14 +603,143 @@ def level_5():
         if move_x >= 300 and move_x <= 400 and move_y <= 10:
             exit_location(8)
             level_4()
+        if move_x >= 100 and move_x <= 550 and move_y >= 470:
+            
+            level_6()
+        
         
         
         
         pygame.display.update()
         clock.tick(165)
 
+def level_6():
+    Click = False
+    running = True
+    global move_x
+    global move_y
+    up = False
+    down = False
+    left = False
+    right = False
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_w:
+                    up = True
+                if event.key == pygame.K_a:
+                    left = True
+                if event.key == pygame.K_s:
+                    down = True
+                if event.key == pygame.K_d:
+                    right = True
+            if event.type == pygame.KEYUP:
+                if event.key == K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_w:
+                    up = False  
+                if event.key == pygame.K_a:
+                    left = False
+                if event.key == pygame.K_s:
+                    down = False
+                if event.key == pygame.K_d:
+                    right = False
+            elif event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    Click = True
+                   
+        mx,my = pygame.mouse.get_pos()  
+        screen.fill((BLACK))  
+        draw_text('You tell santa that you finished and he checks the tree...', pygame.font.SysFont(None, 20), (WHITE), screen, 45, 100)
+        button = pygame.draw.rect(screen,(WHITE),(150,150,50,30))
+        if button.collidepoint((mx,my)):
+            pygame.draw.rect(screen,(RED),(150,150,50,30),1)
+            if Click:      
+                if sum(collected) == 0:
+                        win()
+                    
 
+                elif sum(collected) == 8:
 
+                    draw_text('Santa says theres still some left.. click again to go back',pygame.font.SysFont(None, 40), (WHITE), screen, 45, 300)
+                    
+                    if Click:
+                        exit_location(7)
+                        level_5()
+
+        
+
+     
+
+        
+
+        
+        
+        
+        
+        
+        pygame.display.update()
+        clock.tick(165)
+def win():
+    Click = False
+    running = True
+    global move_x
+    global move_y
+   
+    while running:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_w:
+                    up = True
+                if event.key == pygame.K_a:
+                    left = True
+                if event.key == pygame.K_s:
+                    down = True
+                if event.key == pygame.K_d:
+                    right = True
+            if event.type == pygame.KEYUP:
+                if event.key == K_ESCAPE:
+                    running = False
+                if event.key == pygame.K_w:
+                    up = False  
+                if event.key == pygame.K_a:
+                    left = False
+                if event.key == pygame.K_s:
+                    down = False
+                if event.key == pygame.K_d:
+                    right = False
+            elif event.type == QUIT:
+                    pygame.quit()
+                    sys.exit()
+            if event.type == MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    Click = True
+                   
+        mx,my = pygame.mouse.get_pos()  
+        screen.fill((BLACK))  
+        draw_text('you win would you like to start again?', pygame.font.SysFont(None, 20), (WHITE), screen, 45, 100)
+        button = pygame.draw.rect(screen,(WHITE),(150,150,100,50))
+        button2 = pygame.draw.rect(screen,(WHITE),(300,150,100,50))
+        if button.collidepoint((mx,my)):
+            pygame.draw.rect(screen,(RED),(150,150,100,50),1)
+            if Click:      
+               exit_location(0)
+               collected = [0,0,0,0,0,0,0,0]
+               level_1()
+        if button2.collidepoint((mx,my)):
+            pygame.draw.rect(screen,(RED),(300,150,100,50),1)
+            if Click:      
+                pygame.quit()
+                sys.exit()
+        pygame.display.update()
+        clock.tick(165)
 
 def present(x,y):
     pygame.draw.rect(screen,(RED),(x,y,50,50)) 
